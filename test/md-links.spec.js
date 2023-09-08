@@ -1,10 +1,14 @@
-const mdLinks = require('../');
+const path = require('path');
+const data = require('../src/data');
 
+describe('validateFileType', () => {
+ it('Debe ser una funcion', () => {
+  expect(typeof data.validateFileType).toBe('function');
+ });
 
-describe('mdLinks', () => {
+ it('Debe retornar true si recibe un archivo con una extension valida', () => {
+  jest.spyOn(path).mockImplementationOnce(() => {
 
-  it('should...', () => {
-    console.log('FIX ME!');
-  });
-
+  })
+ })
 });
