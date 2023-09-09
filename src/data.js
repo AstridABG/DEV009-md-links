@@ -17,11 +17,23 @@ const fileExist = (pathName) => {
 //     }
 //   }
 // };
+const isPathAbsolute = (pathName) => {
+  const pathNormalize = path.normalize(pathName);
+  console.log(pathNormalize);
+  const verifyAbsolutePath = path.isAbsolute(pathName);
+  console.log(verifyAbsolutePath);
+  return verifyAbsolutePath;
+}
 
 const transformRelativePath = (pathName) => {
   const absolutePath = path.resolve(pathName);
   return absolutePath;
 };
+
+//segunda opcion para transformar ruta relativa en absoluta
+const transformRelativePath2 = (pathName) => {
+  return path.join(__dirname, pathName);
+}
 
 const validateFileType = (pathName) => {
   const allowedExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt',
@@ -30,8 +42,15 @@ const validateFileType = (pathName) => {
 return allowedExtensions.includes(fileExtension);
 };
 
+const readFileAbsolutePath = (absolutePath) => {
+  return fs.readFileSync(absolutePath, 'utf-8');
+};
+
 module.exports = {
   fileExist,
   transformRelativePath,
-  validateFileType
+  transformRelativePath2,
+  validateFileType,
+  isPathAbsolute,
+  readFileAbsolutePath
 };
