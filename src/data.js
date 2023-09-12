@@ -1,27 +1,16 @@
 const path = require('path');
 const fs = require('fs');
+const md = require('markdown-it')();
 
 const fileExist = (pathName) => {
   console.log(fs.existsSync(pathName));
   return fs.existsSync(pathName);
 };
 
-// const fileExist = (pathName) => {
-//   try {
-//     fs.statSync(pathName);
-//     return true;
-//   } catch (err) {
-//     console.log(err);
-//     if (err.code === 'ENOENT') {
-//       return false;
-//     }
-//   }
-// };
 const isPathAbsolute = (pathName) => {
-  const pathNormalize = path.normalize(pathName);
-  console.log(pathNormalize);
+  console.log('ruta que esta entrando a la funcion es ' + pathName);
   const verifyAbsolutePath = path.isAbsolute(pathName);
-  console.log(verifyAbsolutePath);
+  console.log('la ruta absoluta es ' + verifyAbsolutePath);
   return verifyAbsolutePath;
 }
 
@@ -43,8 +32,35 @@ return allowedExtensions.includes(fileExtension);
 };
 
 const readFileAbsolutePath = (absolutePath) => {
-  return fs.readFileSync(absolutePath, 'utf-8');
+  const fileContent = fs.readFileSync(absolutePath, 'utf-8');
+  console.log('el contenido del archivo es ' + fileContent);
+  const tokens = md.parse(fileContent, {});
+  const links = tokens
+    .filter(token => token.type === 'inline')
+    .reduce((acc, token) => {
+      const linkTokens = token.children.filter(child => child.type === 'link_open');
+      const linkHrefs = linkTokens.map(linkToken => linkToken.attrGet('href'));
+      console.log('el metodo map obtuvo lo siguiente de nuestro archivo md ' + linkHrefs);
+      return [...acc, ...linkHrefs];
+    }, []);
+  console.log('se obtuvieron los siguientes links ' + links);
+  return links;
 };
+
+// function extractLinksFromFile(absolutePath) {
+//   const fileContent = fs.readFileSync(absolutePath, 'utf8');
+//   const tokens = md.parse(fileContent, {});
+
+//   const links = tokens
+//     .filter(token => token.type === 'inline')
+//     .reduce((acc, token) => {
+//       const linkTokens = token.children.filter(child => child.type === 'link_open');
+//       const linkHrefs = linkTokens.map(linkToken => linkToken.attrGet('href'));
+//       return [...acc, ...linkHrefs];
+//     }, []);
+
+//   return links;
+// }
 
 module.exports = {
   fileExist,

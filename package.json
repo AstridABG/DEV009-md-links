@@ -11,7 +11,10 @@
   "devDependencies": {
     "jest": "^29.6.4"
   },
-    "scripts": {
-      "test": "jest"
-    }
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "markdown-it": "^13.0.1"
+  }
 }
