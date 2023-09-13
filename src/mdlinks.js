@@ -17,8 +17,8 @@ const initialization = (fileNamePath) => {
     console.log('La ruta existe y es.. ' + absolutePath);
     if (data.validateFileType(absolutePath)) {
       console.log('la extension del archivo es correcta');
-      const fileContent = data.readFileAbsolutePath(absolutePath);
-      console.log('el contenido del archivo es ' + fileContent);
+      const fileContent = data.readFileContent(absolutePath);
+      console.log('el archivo contiene la siguiente informacion ' + fileContent);
     } else {
       console.log('La extension del archivo es incorrecta');
     }
@@ -26,7 +26,6 @@ const initialization = (fileNamePath) => {
     console.log('La ruta no existe ');
   }
 };
-
-
 initialization(fileNamePath);
-module.exports = {initialization,};
+
+module.exports = {initialization};

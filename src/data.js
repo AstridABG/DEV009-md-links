@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const { callbackify } = require('util');
+const { error } = require('console');
 const md = require('markdown-it')();
 
 const fileExist = (pathName) => {
@@ -31,9 +33,18 @@ const validateFileType = (pathName) => {
 return allowedExtensions.includes(fileExtension);
 };
 
+const readFileContent = (absolutePath) => {
+  return fs.readFile(absolutePath, 'utf-8', (err, data) => {
+    if (err) {
+      throw err
+    } else { 
+      console.log('esto se esta ejecutando en la declaracion de la funcion ' + data);
+    }
+  })
+};
+  
 const readFileAbsolutePath = (absolutePath) => {
-  const fileContent = fs.readFileSync(absolutePath, 'utf-8');
-  console.log('el contenido del archivo es ' + fileContent);
+  const fileContent = fs.readFileSync(absolutePath);
   const tokens = md.parse(fileContent, {});
   const links = tokens
     .filter(token => token.type === 'inline')
@@ -47,20 +58,33 @@ const readFileAbsolutePath = (absolutePath) => {
   return links;
 };
 
-// function extractLinksFromFile(absolutePath) {
-//   const fileContent = fs.readFileSync(absolutePath, 'utf8');
-//   const tokens = md.parse(fileContent, {});
+const readFileAbsolutePath2 =  async (absolutePath) => {
+  let links = '';
+  let arrayOfLinks = [];
 
-//   const links = tokens
-//     .filter(token => token.type === 'inline')
-//     .reduce((acc, token) => {
-//       const linkTokens = token.children.filter(child => child.type === 'link_open');
-//       const linkHrefs = linkTokens.map(linkToken => linkToken.attrGet('href'));
-//       return [...acc, ...linkHrefs];
-//     }, []);
+  let linksAux = await fs.readFile(absolutePath, 'utf-8', (err, fileContent) => {
+    if (err) {
+      throw err;
+    } 
+  const tokens = md.parse(fileContent, {});
+   links = tokens
+    .filter(token => token.type === 'inline')
+    .reduce((acc, token) => {
+      const linkTokens = token.children.filter(child => child.type === 'link_open');
+      const linkHrefs = linkTokens.map(linkToken => linkToken.attrGet('href'));
+      arrayOfLinks.push(...linkHrefs);
+      console.log(arrayOfLinks.length);
+      return arrayOfLinks;
+      //return [...acc, ...linkHrefs];
+    }, []);
+    // console.log('elarreglo de links es ' + arrayOfLinks);
+  //console.log('se obtuvieron los siguientes links ' + links);
+  });
+  // console.log('elarreglo de links es ' + linksAux);
+  
+  return arrayOfLinks;
+};
 
-//   return links;
-// }
 
 module.exports = {
   fileExist,
@@ -68,5 +92,7 @@ module.exports = {
   transformRelativePath2,
   validateFileType,
   isPathAbsolute,
-  readFileAbsolutePath
-};
+  readFileAbsolutePath,
+  readFileAbsolutePath2,
+  readFileContent
+}
