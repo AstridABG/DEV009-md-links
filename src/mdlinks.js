@@ -36,9 +36,10 @@ const mdlinks = (fileNamePath) => {
         return data.readFileAbsolutePath(absolutePath);
       })
       .then((fileContent) => {
-        const pruebaForEach = data.getArrayOfLinksContent(fileContent);
-        console.log('prueba forEach' + pruebaForEach);
-        console.log('el archivo contiene la siguiente informacion ' + fileContent);
+        const pruebagetLinks = data.getLinksFromFile(fileContent);
+        // console.log('el archivo contiene la siguiente informacion ' + fileContent);
+        // console.log(pruebagetLinks.length + ' links fueron encontrados en el archivo MD otorgado');
+        // console.log('Estos son los links encontrados ' + pruebagetLinks);
         resolve();
       })
       .catch((err) => {
