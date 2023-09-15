@@ -33,8 +33,6 @@ return allowedExtensions.includes(fileExtension);
 };
 
 const readFileAbsolutePath =  async (absolutePath) => {
-  // let links = '';
-  // let arrayOfLinks = [];
   let fileContent = '';
 try {
   fileContent = await fsProm.readFile(absolutePath, 'utf-8');
@@ -42,50 +40,65 @@ try {
 } catch (err) {
   console.log(err.message);
 }
-//return fileContent;
-///Esto iba en la funcion que hacia dos cosas a la vez: leer el archivo y obtener los links. Se va a separar para tener las funciones puras
-// const tokens = md.parse(fileContent, {});
+};
+
+const getLinksFromFile = (fileContent) => {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const links = [];
+  let match;
+  while ((match = linkRegex.exec(fileContent))) {
+    const linkText = match[1];
+    const linkUrl = match[2];
+    links.push({ text: linkText, url: linkUrl });
+  }
+  //console.log('se obtuvieron los siguientes links ' + JSON.stringify(links));
+  return links;
+};
+
+const printDataFromFile = (links, absolutePath) => {
+links.forEach(link => {
+ // arrayOfLinksContent.push('texto de la liga :' + link);
+  console.log('href: ' + link.url);
+  console.log('text: ' + link.text);
+  console.log('file: ' + absolutePath);
+  console.log('');
+  })
+}
+// const getLinksFromFile = (fileContent) => {
+//   let links = '';
+//   let arrayOfLinks = [];
+//   let linkTextsArray = [];
+//   const tokens = md.parse(fileContent, {});
 //  links = tokens
 //   .filter(token => token.type === 'inline')
 //   .reduce((acc, token) => {
 //     const linkTokens = token.children.filter(child => child.type === 'link_open');
 //     const linkHrefs = linkTokens.map(linkToken => linkToken.attrGet('href'));
+//     const linkTexts = linkTokens.map(linkToken => {
+//       const findText = /\[(.*?)\]/g;
+//       const match = fileContent.match(findText);
+//       return match ;
+//     })
+//     linkTextsArray.push(...linkTexts);
+//     //console.log('Lo que se encuentra dentro de la funcion linkTexts es ' + linkTexts);
 //     arrayOfLinks.push(...linkHrefs);
 //     return arrayOfLinks;
 //   }, []);
-// console.log('se obtuvieron los siguientes links ' + links);
+//   const arrayOfText = linkTextsArray.filter(function(item, pos, self) {
+//     return self.indexOf(item) == pos;
+// });
+// console.log(linkTextsArray.length);
+// console.log('se obtuvieron los siguientes links ' + arrayOfText[0]);
 //   return links;
-};
+// };
 
-const getLinksFromFile = (fileContent) => {
-  let links = '';
-  let arrayOfLinks = [];
-  const tokens = md.parse(fileContent, {});
- links = tokens
-  .filter(token => token.type === 'inline')
-  .reduce((acc, token) => {
-    const linkTokens = token.children.filter(child => child.type === 'link_open');
-    const linkHrefs = linkTokens.map(linkToken => linkToken.attrGet('href'));
-    const linkTexts = linkTokens.map(linkToken => {
-      const findText = /\[(.*?)\]/g;
-      const match = fileContent.match(findText);
-      return match ? match[0] : '';
-    })
-    console.log(linkTexts);
-    arrayOfLinks.push(...linkHrefs);
-    return arrayOfLinks;
-  }, []);
-// console.log('se obtuvieron los siguientes links ' + links);
-  return links;
-};
-
-const getArrayOfLinksContent = (links) => {
-  let arrayOfLinksContent = []
-links.forEach(link => {
-  arrayOfLinksContent.push('texto de la liga :' + link);
-})
-return arrayOfLinksContent;
-};
+// const getArrayOfLinksContent = (links) => {
+//   let arrayOfLinksContent = []
+// links.forEach(link => {
+//   arrayOfLinksContent.push('texto de la liga :' + link);
+// })
+// return arrayOfLinksContent;
+// };
 
 module.exports = {
   fileExist,
@@ -95,5 +108,5 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  getArrayOfLinksContent
+  printDataFromFile
 }

@@ -29,15 +29,19 @@ const initialization = async (fileNamePath) => {
   return absolutePath;
 };
 
-const mdlinks = (fileNamePath) => {
+
+const mdlinks = (fileNamePath) => { 
+let absolutePathSolved = '';
   return new Promise((resolve, reject) => {
     initialization(fileNamePath)
       .then((absolutePath) => {
+        absolutePathSolved = absolutePath;
         return data.readFileAbsolutePath(absolutePath);
       })
       .then((fileContent) => {
         const pruebagetLinks = data.getLinksFromFile(fileContent);
         // console.log('el archivo contiene la siguiente informacion ' + fileContent);
+        data.printDataFromFile(pruebagetLinks, absolutePathSolved);
         // console.log(pruebagetLinks.length + ' links fueron encontrados en el archivo MD otorgado');
         // console.log('Estos son los links encontrados ' + pruebagetLinks);
         resolve();
