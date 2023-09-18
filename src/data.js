@@ -60,15 +60,17 @@ return links.map((link) => {
 });
 };
 
-const printDataFromFile = (links, absolutePath) => {
-links.forEach(link => {
-  links.push('texto de la liga :' + links);
-  console.log('href: ' + link.url);
-  console.log('text: ' + link.text);
-  console.log('file: ' + absolutePath);
-  console.log('');
-  })
-}
+/* --------------------Panteon de las funciones no utilizadas------------------- */
+// const printDataFromFile = (links, absolutePath) => {
+//   links.forEach(link => {
+//     links.push('texto de la liga :' + links);
+//     console.log('href: ' + link.url);
+//     console.log('text: ' + link.text);
+//     console.log('file: ' + absolutePath);
+//     console.log('');
+//     })
+//   };
+
 // const getLinksFromFile = (fileContent) => {
 //   let links = '';
 //   let arrayOfLinks = [];
@@ -113,6 +115,5 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  addPathToLinks,
- // printDataFromFile
+  addPathToLinks
 }
