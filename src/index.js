@@ -1,10 +1,17 @@
+const fileNamePath = process.argv[2];
 const {mdlinks} = require('./mdlinks');
 
 
 mdlinks(fileNamePath)
   .then((links) => {
-    console.log('La promesa se resolvió correctamente y devolvio los siguientes links' + links);
+    links.forEach((link, index) => {
+      console.log(`Contenido del objeto en el índice ${index}:`);
+      console.log(`Texto: ${link.text}`);
+      console.log(`URL: ${link.url}`);
+      console.log(`Ruta: ${link.path}`);
+      console.log('');
+    });
   })
   .catch((err) => {
-    console.log('La promesa se rechazó con el siguiente error: ' + err.message);
+    console.error(err);
   });

@@ -51,13 +51,18 @@ const getLinksFromFile = (fileContent) => {
     const linkUrl = match[2];
     links.push({ text: linkText, url: linkUrl });
   }
-  //console.log('se obtuvieron los siguientes links ' + JSON.stringify(links));
   return links;
+};
+
+const addPathToLinks = (links, absolutePath) => {
+return links.map((link) => {
+  return { ...link, path: absolutePath};
+});
 };
 
 const printDataFromFile = (links, absolutePath) => {
 links.forEach(link => {
- // arrayOfLinksContent.push('texto de la liga :' + link);
+  links.push('texto de la liga :' + links);
   console.log('href: ' + link.url);
   console.log('text: ' + link.text);
   console.log('file: ' + absolutePath);
@@ -108,5 +113,6 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  printDataFromFile
+  addPathToLinks,
+ // printDataFromFile
 }

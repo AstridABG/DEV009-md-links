@@ -39,12 +39,8 @@ let absolutePathSolved = '';
         return data.readFileAbsolutePath(absolutePath);
       })
       .then((fileContent) => {
-        const pruebagetLinks = data.getLinksFromFile(fileContent);
-        // console.log('el archivo contiene la siguiente informacion ' + fileContent);
-        data.printDataFromFile(pruebagetLinks, absolutePathSolved);
-        // console.log(pruebagetLinks.length + ' links fueron encontrados en el archivo MD otorgado');
-        // console.log('Estos son los links encontrados ' + pruebagetLinks);
-        resolve();
+        const pruebagetLinks = data.addPathToLinks(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
+        resolve(pruebagetLinks);
       })
       .catch((err) => {
         reject(err);
