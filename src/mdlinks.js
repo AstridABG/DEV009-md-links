@@ -7,7 +7,8 @@ const argv3 = process.argv[4];
 const initialization = async (fileNamePath) => {
   let absolutePath = "";
   if (data.isPathAbsolute(fileNamePath)) {
-    console.log('La ruta es absoluta ' + absolutePath);
+    absolutePath = fileNamePath;
+    console.log('La ruta absoluta es... ' + absolutePath);
   } else {
     absolutePath = data.transformRelativePath(fileNamePath);
     console.log('la ruta es relativa, transformando en ' + absolutePath);

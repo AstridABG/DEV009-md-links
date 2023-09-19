@@ -13,7 +13,7 @@ const isPathAbsolute = (pathName) => {
   const verifyAbsolutePath = path.isAbsolute(pathName);
   console.log('la ruta absoluta es ' + verifyAbsolutePath);
   return verifyAbsolutePath;
-}
+};
 
 const transformRelativePath = (pathName) => {
   const absolutePath = path.resolve(pathName);
