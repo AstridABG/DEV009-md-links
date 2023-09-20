@@ -1,0 +1,1 @@
+Para comenzar este proyecto tendrás que hacer un fork y clonar este repositorio.

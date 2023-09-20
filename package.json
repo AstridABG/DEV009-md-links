@@ -12,7 +12,7 @@
     "jest": "^29.6.4"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "markdown-it": "^13.0.1"

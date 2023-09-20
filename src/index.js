@@ -8,7 +8,7 @@ mdlinks(fileNamePath)
       console.log(`Contenido del objeto en el índice ${index}:`);
       console.log(`Texto: ${link.text}`);
       console.log(`URL: ${link.url}`);
-      console.log(`Ruta: ${link.path}`);
+      console.log(`Ruta: ${link.file}`);
       console.log('');
     });
   })

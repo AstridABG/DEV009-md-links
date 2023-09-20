@@ -56,7 +56,7 @@ const getLinksFromFile = (fileContent) => {
 
 const addPathToLinks = (links, absolutePath) => {
 return links.map((link) => {
-  return { ...link, path: absolutePath};
+  return { ...link, file: absolutePath};
 });
 };
 
