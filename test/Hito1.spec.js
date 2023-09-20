@@ -1,4 +1,3 @@
-const path = require('path');
 const data = require('../src/data');
 const fs = require('fs');
 //const fsProm = require('fs').promises;
