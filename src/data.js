@@ -9,9 +9,9 @@ const fileExist = (pathName) => {
 };
 
 const isPathAbsolute = (pathName) => {
-  console.log('ruta que esta entrando a la funcion es ' + pathName);
+  //console.log('ruta que esta entrando a la funcion es ' + pathName);
   const verifyAbsolutePath = path.isAbsolute(pathName);
-  console.log('la ruta absoluta es ' + verifyAbsolutePath);
+  //console.log('la ruta absoluta es ' + verifyAbsolutePath);
   return verifyAbsolutePath;
 };
 

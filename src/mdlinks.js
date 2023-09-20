@@ -18,9 +18,6 @@ const initialization = async (fileNamePath) => {
     if (data.validateFileType(absolutePath)) {
       console.log('la extension del archivo es correcta');
       // const fileContent = await data.readFileAbsolutePath(absolutePath);
-      // const pruebaForEach = data.getArrayOfLinksContent(fileContent);
-      // console.log('prueba forEach' + pruebaForEach);
-      // console.log('el archivo contiene la siguiente informacion ' + fileContent);
     } else {
       console.log('La extension del archivo es incorrecta');
     }
@@ -33,6 +30,7 @@ const initialization = async (fileNamePath) => {
 
 const mdlinks = (fileNamePath) => { 
 let absolutePathSolved = '';
+console.log('solo se debe imprimir una vez');
   return new Promise((resolve, reject) => {
     initialization(fileNamePath)
       .then((absolutePath) => {
@@ -57,5 +55,5 @@ let absolutePathSolved = '';
 // console.log('prueba forEach' + pruebaForEach);
 // console.log('el archivo contiene la siguiente informacion ' + fileContent);
 // }
-mdlinks(fileNamePath);
+//mdlinks(fileNamePath);
 module.exports = {initialization, mdlinks};
