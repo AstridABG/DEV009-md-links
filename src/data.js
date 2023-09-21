@@ -1,5 +1,6 @@
 const path = require('node:path');
 const fs = require('node:fs');
+const { error } = require('node:console');
 const fsProm = require('fs').promises;
 const md = require('markdown-it')();
 
@@ -54,10 +55,27 @@ const getLinksFromFile = (fileContent) => {
   return links;
 };
 
-const addPathToLinks = (links, absolutePath) => {
-return links.map((link) => {
-  return { ...link, file: absolutePath};
-});
+const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
+  
+  let arrayLinks = await Promise.all(links.map(async (link) => {
+    //console.log(link.url.value());
+    // const jsonLink = JSON.parse(link); 
+    // console.log(jsonLink);
+    const linksTocheck = link.url;
+    console.log(linksTocheck);
+    return await fetch(linksTocheck).then((resp) => {
+      return { ...link, file: absolutePath, status: resp.status };
+    }).catch((error) => {
+      //console.log(link.url);
+      return { ...link, file: absolutePath, status: error.code };
+    });
+  })).then();
+  console.log('antes');
+  console.log(arrayLinks);
+  console.log('despues');
+// return links.map((link) => {
+//   return { ...link, file: absolutePath };
+// });
 };
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
@@ -115,5 +133,5 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  addPathToLinks
+  addPathToLinksAndLinkStatus
 }
