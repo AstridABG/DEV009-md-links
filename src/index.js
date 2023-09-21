@@ -5,6 +5,6 @@ mdlinks(fileNamePath)
   .then((resolve) => {
     console.log(resolve);
   })
-  .catch((err) => {
-    console.error(err);
+  .catch((error) => {
+    console.error(error);
   });

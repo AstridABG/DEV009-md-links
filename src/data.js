@@ -1,8 +1,8 @@
 const path = require('node:path');
 const fs = require('node:fs');
-const { error } = require('node:console');
 const fsProm = require('fs').promises;
 const md = require('markdown-it')();
+const axios = require('axios');
 
 const fileExist = (pathName) => {
   console.log(fs.existsSync(pathName));
@@ -56,27 +56,35 @@ const getLinksFromFile = (fileContent) => {
 };
 
 const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
-  
-  let arrayLinks = await Promise.all(links.map(async (link) => {
-    //console.log(link.url.value());
-    // const jsonLink = JSON.parse(link); 
-    // console.log(jsonLink);
-    const linksTocheck = link.url;
-    console.log(linksTocheck);
-    return await fetch(linksTocheck).then((resp) => {
-      return { ...link, file: absolutePath, status: resp.status };
-    }).catch((error) => {
-      //console.log(link.url);
-      return { ...link, file: absolutePath, status: error.code };
+  try {
+    const responses = await axios.all(links.map((link) => axios.get(link.url)));
+    return links.map((link, index) => {
+      return { ...link, file: absolutePath, status: responses[index].status };
     });
-  })).then();
-  console.log('antes');
-  console.log(arrayLinks);
-  console.log('despues');
+  } catch (error) {
+    // Este código se ejecutará si la promesa se rechaza.
+    console.error('se encontro el siguiente error' + error);
+  }
+};
+// const addPathToLinksAndLinkStatus = (links, absolutePath) => {
 // return links.map((link) => {
 //   return { ...link, file: absolutePath };
 // });
-};
+// };
+
+ // let arrayLinks = await Promise.all(links.map(async (link) => {
+  //   console.log(link.url.value());
+  //   const jsonLink = JSON.parse(link); 
+  //   console.log(jsonLink);
+  //   const linksTocheck = link.url;
+  //   console.log(linksTocheck);
+  //   return await fetch(linksTocheck).then((resp) => {
+  //     return { ...link, file: absolutePath, status: resp.status };
+  //   }).catch((error) => {
+  //     console.log(link.url);
+  //     return { ...link, file: absolutePath, status: error.code };
+  //   });
+  // }))
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {

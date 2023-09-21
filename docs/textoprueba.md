@@ -5,7 +5,7 @@
 * También podríamos usar una combinación de varios módulos (podría ser válido
   transformar el Markdown a HTML usando algo como [marked](https://github.com/markedjs/marked)
   y de ahí extraer los links con una librería de DOM como [JSDOM](https://www.npmjs.com/package/jsdom)
-  o [Cheerio](https://cheerio.js./) entre otras).
+  o [Cheerio](https://cheerio.js.org/) entre otras).
 
 * Usando un [custom renderer de la librería marked](https://marked.js.org/using_pro#renderer)
   (new marked.Renderer()).

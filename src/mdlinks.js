@@ -33,7 +33,7 @@ const initialization = async (fileNamePath) => {
 };
 
 
-const mdlinks = (fileNamePath, param4) => { 
+const mdlinks = (fileNamePath) => { 
 let absolutePathSolved = '';
 console.log('solo se debe imprimir una vez');
   return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ console.log('solo se debe imprimir una vez');
       })
       .then((fileContent) => {
         const pruebagetLinks = data.addPathToLinksAndLinkStatus(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
-        console.log(pruebagetLinks);
+        //console.log(pruebagetLinks);
         resolve(pruebagetLinks);
 
       })
