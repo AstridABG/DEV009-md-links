@@ -63,7 +63,11 @@ const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
     });
   } catch (error) {
     // Este código se ejecutará si la promesa se rechaza.
-    console.error('se encontro el siguiente error' + error);
+    const responses = await axios.all(links.map((link) => axios.get(link.url)));
+    return links.map((link, index) => {
+      return { ...link, file: absolutePath, status: responses[index].status };
+    });
+    //console.error('se encontro el siguiente error' + error);
   }
 };
 // const addPathToLinksAndLinkStatus = (links, absolutePath) => {
