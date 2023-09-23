@@ -44,9 +44,11 @@ console.log('solo se debe imprimir una vez');
       })
       .then((fileContent) => {
         const pruebagetLinks = data.addPathToLinksAndLinkStatus(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
-        //console.log(pruebagetLinks);
-        resolve(pruebagetLinks);
-
+        return pruebagetLinks;
+      })
+      .then((links) => {
+        const linksStatus = data.linksResponse(links);
+        resolve(linksStatus);
       })
       .catch((err) => {
         reject(err);

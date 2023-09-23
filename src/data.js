@@ -28,19 +28,19 @@ const transformRelativePath2 = (pathName) => {
 
 const validateFileType = (pathName) => {
   const allowedExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt',
-   '.mdtext', '.markdown', '.text'];
+    '.mdtext', '.markdown', '.text'];
   const fileExtension = path.extname(pathName);
-return allowedExtensions.includes(fileExtension);
+  return allowedExtensions.includes(fileExtension);
 };
 
-const readFileAbsolutePath =  async (absolutePath) => {
+const readFileAbsolutePath = async (absolutePath) => {
   let fileContent = '';
-try {
-  fileContent = await fsProm.readFile(absolutePath, 'utf-8');
-  return fileContent
-} catch (err) {
-  console.log(err.message);
-}
+  try {
+    fileContent = await fsProm.readFile(absolutePath, 'utf-8');
+    return fileContent
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 const getLinksFromFile = (fileContent) => {
@@ -55,40 +55,28 @@ const getLinksFromFile = (fileContent) => {
   return links;
 };
 
-const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
-  try {
-    const responses = await axios.all(links.map((link) => axios.get(link.url)));
-    return links.map((link, index) => {
-      return { ...link, file: absolutePath, status: responses[index].status };
-    });
-  } catch (error) {
-    // Este código se ejecutará si la promesa se rechaza.
-    const responses = await axios.all(links.map((link) => axios.get(link.url)));
-    return links.map((link, index) => {
-      return { ...link, file: absolutePath, status: responses[index].status };
-    });
-    //console.error('se encontro el siguiente error' + error);
-  }
+const addPathToLinksAndLinkStatus = (links, absolutePath) => {
+  return links.map((link) => {
+    return { ...link, file: absolutePath };
+  });
 };
-// const addPathToLinksAndLinkStatus = (links, absolutePath) => {
-// return links.map((link) => {
-//   return { ...link, file: absolutePath };
-// });
-// };
 
- // let arrayLinks = await Promise.all(links.map(async (link) => {
-  //   console.log(link.url.value());
-  //   const jsonLink = JSON.parse(link); 
-  //   console.log(jsonLink);
-  //   const linksTocheck = link.url;
-  //   console.log(linksTocheck);
-  //   return await fetch(linksTocheck).then((resp) => {
-  //     return { ...link, file: absolutePath, status: resp.status };
-  //   }).catch((error) => {
-  //     console.log(link.url);
-  //     return { ...link, file: absolutePath, status: error.code };
-  //   });
-  // }))
+const linksResponse = (links) => {
+  const verifyLinks = links.map(link => {
+    return axios.get(link.url)
+      .then(response => {
+        link.status = response.status;
+        link.info = 'valid';
+        return link;
+      })
+      .catch(error => {
+        link.status = error.message;
+        link.info = 'broken';
+        return link;
+      })
+  })
+  return Promise.all(verifyLinks);
+};
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {
@@ -137,6 +125,38 @@ const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
 // return arrayOfLinksContent;
 // };
 
+// const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
+//   try {
+//     const responses = await axios.all(links.map((link) => axios.get(link.url)));
+//     return links.map((link, index) => {
+//       return { ...link, file: absolutePath, status: responses[index].status };
+//     });
+//   } catch (error) {
+//     // Este código se ejecutará si la promesa se rechaza.
+//     const responses = await axios.all(links.map((link) => axios.get(link.url)));
+//     return links.map((link, index) => {
+//       return { ...link, file: absolutePath, status: responses[index].status };
+//     });
+//     //console.error('se encontro el siguiente error' + error);
+//   }
+// };
+
+
+// let arrayLinks = await Promise.all(links.map(async (link) => {
+//   console.log(link.url.value());
+//   const jsonLink = JSON.parse(link); 
+//   console.log(jsonLink);
+//   const linksTocheck = link.url;
+//   console.log(linksTocheck);
+//   return await fetch(linksTocheck).then((resp) => {
+//     return { ...link, file: absolutePath, status: resp.status };
+//   }).catch((error) => {
+//     console.log(link.url);
+//     return { ...link, file: absolutePath, status: error.code };
+//   });
+// }))
+
+
 module.exports = {
   fileExist,
   transformRelativePath,
@@ -145,5 +165,6 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  addPathToLinksAndLinkStatus
+  addPathToLinksAndLinkStatus,
+  linksResponse
 }
