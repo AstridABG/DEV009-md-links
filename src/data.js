@@ -55,7 +55,7 @@ const getLinksFromFile = (fileContent) => {
   return links;
 };
 
-const addPathToLinksAndLinkStatus = (links, absolutePath) => {
+const addPathToLinks = (links, absolutePath) => {
   return links.map((link) => {
     return { ...link, file: absolutePath };
   });
@@ -70,9 +70,15 @@ const linksResponse = (links) => {
         return link;
       })
       .catch(error => {
-        link.status = error.message;
-        link.info = 'broken';
-        return link;
+        if (error.code === 'ENOTFOUND') {
+          link.status = 404;
+          link.info = 'broken';
+          return link;
+        } else {
+          link.status = error.code;
+          link.info = 'broken';
+          return link;
+        }
       })
   })
   return Promise.all(verifyLinks);
@@ -165,6 +171,6 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  addPathToLinksAndLinkStatus,
+  addPathToLinks,
   linksResponse
 }

@@ -35,7 +35,6 @@ const initialization = async (fileNamePath) => {
 
 const mdlinks = (fileNamePath) => { 
 let absolutePathSolved = '';
-console.log('solo se debe imprimir una vez');
   return new Promise((resolve, reject) => {
     initialization(fileNamePath)
       .then((absolutePath) => {
@@ -56,6 +55,6 @@ console.log('solo se debe imprimir una vez');
   });
 };
 
-
+//comentar la siguiente linea para que no se repita el initialize
 mdlinks(fileNamePath, param4);
 module.exports = {initialization, mdlinks};
