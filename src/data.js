@@ -5,7 +5,6 @@ const md = require('markdown-it')();
 const axios = require('axios');
 
 const fileExist = (pathName) => {
-  console.log(fs.existsSync(pathName));
   return fs.existsSync(pathName);
 };
 
@@ -83,6 +82,7 @@ const linksResponse = (links) => {
   })
   return Promise.all(verifyLinks);
 };
+
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {

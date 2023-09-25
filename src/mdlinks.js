@@ -42,7 +42,7 @@ let absolutePathSolved = '';
         return data.readFileAbsolutePath(absolutePath);
       })
       .then((fileContent) => {
-        const pruebagetLinks = data.addPathToLinksAndLinkStatus(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
+        const pruebagetLinks = data.addPathToLinks(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
         return pruebagetLinks;
       })
       .then((links) => {
