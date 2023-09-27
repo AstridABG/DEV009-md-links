@@ -25,8 +25,7 @@ const transformRelativePath2 = (pathName) => {
 }
 
 const validateFileType = (pathName) => {
-  const allowedExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt',
-    '.mdtext', '.markdown', '.text'];
+  const allowedExtensions = ['.md'];
   const fileExtension = path.extname(pathName);
   return allowedExtensions.includes(fileExtension);
 };
@@ -82,7 +81,10 @@ const linksResponse = (links) => {
   return Promise.all(verifyLinks);
 };
 
-
+const readDir = (path) => {
+const files = fs.readdirSync(path);
+return files;
+}
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {
@@ -172,5 +174,6 @@ module.exports = {
   readFileAbsolutePath,
   getLinksFromFile,
   addPathToLinks,
-  linksResponse
+  linksResponse,
+  readDir
 }

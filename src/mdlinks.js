@@ -1,8 +1,9 @@
 const data = require('./data.js');
-
+const fileNamePath = process.argv[2];
 /* ------Funcion que da como resultado una ruta valida-------  */
 const initialization = async (fileNamePath) => {
   let absolutePath = "";
+  console.log('Prueba leer directorio' + data.readDir(fileNamePath));
   if (data.isPathAbsolute(fileNamePath)) {
     absolutePath = fileNamePath;
     console.log('La ruta absoluta es... ' + absolutePath);
@@ -53,4 +54,5 @@ let absolutePathSolved = '';
 
 //comentar la siguiente linea para que no se repita el initialize
 //mdlinks(fileNamePath, options);
+initialization(fileNamePath);
 module.exports = {initialization, mdlinks};
