@@ -31,28 +31,28 @@ const resultValidStatus = [
       url: 'https://www.npmjs.com/package/markdown-it',
       file: 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\textoprueba.md',
       status: 200,
-      info: 'valid'
+      info: 'ok'
     },
     {
       text: 'marked',
       url: 'https://github.com/markedjs/marked',
       file: 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\textoprueba.md',
       status: 200,
-      info: 'valid'
+      info: 'ok'
     },
     {
       text: 'JSDOM',
       url: 'https://www.npmjs.com/package/jsdom',
       file: 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\textoprueba.md',
       status: 200,
-      info: 'valid'
+      info: 'ok'
     },
     {
       text: 'custom renderer de la librería marked',
       url: 'https://marked.js.org/using_pro#renderer',
       file: 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\textoprueba.md',
       status: 200,
-      info: 'valid'
+      info: 'ok'
     }
   ];
 
@@ -69,7 +69,7 @@ const wrongResponse = [
         url: 'https://cheerio.js./',
         file: 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\textoprueba.md',
         status: 404,
-        info: 'broken'
+        info: 'fail'
       }
 ]
 describe('linksResponse', () => {
