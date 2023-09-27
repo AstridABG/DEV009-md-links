@@ -73,7 +73,7 @@ describe('addPathToLinks', () => {
 
 describe('validateFileType', () => {
   it('Debe retornar true si recibe un archivo con una extension valida', () => {
-    const filePath = 'ejemplo.mkd'
+    const filePath = 'ejemplo.md'
     expect(data.validateFileType(filePath)).toBe(true);
   });
 

@@ -3,7 +3,7 @@ const fileNamePath = process.argv[2];
 /* ------Funcion que da como resultado una ruta valida-------  */
 const initialization = async (fileNamePath) => {
   let absolutePath = "";
-  console.log('Prueba leer directorio' + data.readDir(fileNamePath));
+  console.log("Se encontraron los siguientes archivos md en la carpeta seleccionada" + data.readDir(fileNamePath));
   if (data.isPathAbsolute(fileNamePath)) {
     absolutePath = fileNamePath;
     console.log('La ruta absoluta es... ' + absolutePath);
