@@ -1,7 +1,6 @@
 const path = require('node:path');
 const fs = require('node:fs');
 const fsProm = require('fs').promises;
-const md = require('markdown-it')();
 const axios = require('axios');
 
 const fileExist = (pathName) => {
@@ -65,23 +64,24 @@ const linksResponse = (links) => {
     return axios.get(link.url)
       .then(response => {
         link.status = response.status;
-        link.info = 'valid';
+        link.info = 'ok';
         return link;
       })
       .catch(error => {
         if (error.code === 'ENOTFOUND') {
           link.status = 404;
-          link.info = 'broken';
+          link.info = 'fail';
           return link;
         } else {
           link.status = error.code;
-          link.info = 'broken';
+          link.info = 'fail';
           return link;
         }
       })
   })
   return Promise.all(verifyLinks);
 };
+
 
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
