@@ -1,10 +1,9 @@
 const path = require('node:path');
 const fs = require('node:fs');
 const fsProm = require('fs').promises;
-const md = require('markdown-it')();
+const axios = require('axios');
 
 const fileExist = (pathName) => {
-  console.log(fs.existsSync(pathName));
   return fs.existsSync(pathName);
 };
 
@@ -27,19 +26,19 @@ const transformRelativePath2 = (pathName) => {
 
 const validateFileType = (pathName) => {
   const allowedExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt',
-   '.mdtext', '.markdown', '.text'];
+    '.mdtext', '.markdown', '.text'];
   const fileExtension = path.extname(pathName);
-return allowedExtensions.includes(fileExtension);
+  return allowedExtensions.includes(fileExtension);
 };
 
-const readFileAbsolutePath =  async (absolutePath) => {
+const readFileAbsolutePath = async (absolutePath) => {
   let fileContent = '';
-try {
-  fileContent = await fsProm.readFile(absolutePath, 'utf-8');
-  return fileContent
-} catch (err) {
-  console.log(err.message);
-}
+  try {
+    fileContent = await fsProm.readFile(absolutePath, 'utf-8');
+    return fileContent
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 const getLinksFromFile = (fileContent) => {
@@ -55,10 +54,35 @@ const getLinksFromFile = (fileContent) => {
 };
 
 const addPathToLinks = (links, absolutePath) => {
-return links.map((link) => {
-  return { ...link, file: absolutePath};
-});
+  return links.map((link) => {
+    return { ...link, file: absolutePath };
+  });
 };
+
+const linksResponse = (links) => {
+  const verifyLinks = links.map(link => {
+    return axios.get(link.url)
+      .then(response => {
+        link.status = response.status;
+        link.info = 'ok';
+        return link;
+      })
+      .catch(error => {
+        if (error.code === 'ENOTFOUND') {
+          link.status = 404;
+          link.info = 'fail';
+          return link;
+        } else {
+          link.status = error.code;
+          link.info = 'fail';
+          return link;
+        }
+      })
+  })
+  return Promise.all(verifyLinks);
+};
+
+
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {
@@ -107,6 +131,38 @@ return links.map((link) => {
 // return arrayOfLinksContent;
 // };
 
+// const addPathToLinksAndLinkStatus = async (links, absolutePath) => {
+//   try {
+//     const responses = await axios.all(links.map((link) => axios.get(link.url)));
+//     return links.map((link, index) => {
+//       return { ...link, file: absolutePath, status: responses[index].status };
+//     });
+//   } catch (error) {
+//     // Este código se ejecutará si la promesa se rechaza.
+//     const responses = await axios.all(links.map((link) => axios.get(link.url)));
+//     return links.map((link, index) => {
+//       return { ...link, file: absolutePath, status: responses[index].status };
+//     });
+//     //console.error('se encontro el siguiente error' + error);
+//   }
+// };
+
+
+// let arrayLinks = await Promise.all(links.map(async (link) => {
+//   console.log(link.url.value());
+//   const jsonLink = JSON.parse(link); 
+//   console.log(jsonLink);
+//   const linksTocheck = link.url;
+//   console.log(linksTocheck);
+//   return await fetch(linksTocheck).then((resp) => {
+//     return { ...link, file: absolutePath, status: resp.status };
+//   }).catch((error) => {
+//     console.log(link.url);
+//     return { ...link, file: absolutePath, status: error.code };
+//   });
+// }))
+
+
 module.exports = {
   fileExist,
   transformRelativePath,
@@ -115,5 +171,6 @@ module.exports = {
   isPathAbsolute,
   readFileAbsolutePath,
   getLinksFromFile,
-  addPathToLinks
+  addPathToLinks,
+  linksResponse
 }

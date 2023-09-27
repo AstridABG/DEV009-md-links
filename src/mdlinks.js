@@ -1,8 +1,5 @@
 const data = require('./data.js');
-const fileNamePath = process.argv[2];
-const argv2 = process.argv[3];
-const argv3 = process.argv[4];
-//console.log('Esto es lo que se escribió en el argumento No. 3.. ' + argv2);
+
 /* ------Funcion que da como resultado una ruta valida-------  */
 const initialization = async (fileNamePath) => {
   let absolutePath = "";
@@ -17,7 +14,6 @@ const initialization = async (fileNamePath) => {
     console.log('La ruta existe y es.. ' + absolutePath);
     if (data.validateFileType(absolutePath)) {
       console.log('la extension del archivo es correcta');
-      // const fileContent = await data.readFileAbsolutePath(absolutePath);
     } else {
       console.log('La extension del archivo es incorrecta');
     }
@@ -28,9 +24,8 @@ const initialization = async (fileNamePath) => {
 };
 
 
-const mdlinks = (fileNamePath) => { 
+const mdlinks = (fileNamePath, options) => { 
 let absolutePathSolved = '';
-console.log('solo se debe imprimir una vez');
   return new Promise((resolve, reject) => {
     initialization(fileNamePath)
       .then((absolutePath) => {
@@ -38,8 +33,17 @@ console.log('solo se debe imprimir una vez');
         return data.readFileAbsolutePath(absolutePath);
       })
       .then((fileContent) => {
-        const pruebagetLinks = data.addPathToLinks(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
-        resolve(pruebagetLinks);
+        const pruebaGetLinks = data.addPathToLinks(data.getLinksFromFile(fileContent), absolutePathSolved); //esta es la funcion que imprime los objetos dentro del arreglo
+        if (pruebaGetLinks.length === 0){
+          console.log('El archivo que intentas analizar no contiene links')
+        } else {
+          if(options.validate) {
+            const linksStatus = data.linksResponse(pruebaGetLinks);
+            resolve(linksStatus);
+          } else {
+            resolve(pruebaGetLinks);
+          }
+        }
       })
       .catch((err) => {
         reject(err);
@@ -47,13 +51,6 @@ console.log('solo se debe imprimir una vez');
   });
 };
 
-
-// const mdlinks = async (fileNamePath) => {
-// const absolutePath = await initialization(fileNamePath);
-// const fileContent = await data.readFileAbsolutePath(absolutePath);
-// const pruebaForEach = data.getArrayOfLinksContent(fileContent);
-// console.log('prueba forEach' + pruebaForEach);
-// console.log('el archivo contiene la siguiente informacion ' + fileContent);
-// }
-//mdlinks(fileNamePath);
+//comentar la siguiente linea para que no se repita el initialize
+//mdlinks(fileNamePath, options);
 module.exports = {initialization, mdlinks};
