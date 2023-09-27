@@ -81,10 +81,16 @@ const linksResponse = (links) => {
   return Promise.all(verifyLinks);
 };
 
-const readDir = (path) => {
-const files = fs.readdirSync(path);
-return files;
-}
+const readDir = (pathName) => {
+const files = fs.readdirSync(pathName);
+const mdFiles = [];
+files.forEach(file => {
+  if (path.extname(file) === ".md") {
+    mdFiles.push(file);
+  }
+});
+return mdFiles;
+};
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {
