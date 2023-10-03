@@ -81,6 +81,15 @@ const linksResponse = (links) => {
   return Promise.all(verifyLinks);
 };
 
+const isFile = (pathName) => {
+  const stats = fs.lstatSync(pathName);
+  return stats.isFile();
+};
+const isDirectory = (pathName) => {
+  const stats = fs.lstatSync(pathName);
+  return stats.isDirectory();
+};
+
 const readDir = (pathName) => {
 const files = fs.readdirSync(pathName);
 const mdFiles = [];
@@ -91,6 +100,67 @@ files.forEach(file => {
 });
 return mdFiles;
 };
+
+const initialization = (fileNamePath) => {
+  return new Promise((resolve, reject) => {
+    let absolutePath = "";
+    if (isPathAbsolute(fileNamePath)) {
+      absolutePath = fileNamePath;
+      console.log('La ruta absoluta es... ' + absolutePath);
+    } else {
+      absolutePath = transformRelativePath(fileNamePath);
+      console.log('la ruta es relativa, transformando en ' + absolutePath);
+    }
+    if (fileExist(absolutePath)) {
+      console.log('La ruta existe y es.. ' + absolutePath);
+      if (validateFileType(absolutePath)) {
+        console.log('la extension del archivo es correcta');
+      } else {
+        console.log('La extension del archivo es incorrecta');
+      }
+    } else {
+      console.log('La ruta no existe ');
+    }
+    resolve(absolutePath);
+  });
+};
+
+const extractContentFromDirectoryOrFile = (fileNamePath) => {
+  if (isDirectory(fileNamePath)) {
+    const dirContent = readDir(fileNamePath);
+    const arrayOfFiles = dirContent.map((file) => {
+      return initialization(fileNamePath + '/' + file)
+        .then((initializationResult) => {
+          console.log('el resultado del forEach es: ' + initializationResult);
+          return initializationResult;
+        })
+        .catch((error) => {
+          console.log('Error occurred:', error);
+        });
+    });
+
+    console.log('el resultado de dirContent es: ' + arrayOfFiles);
+    return Promise.all(arrayOfFiles)
+      .then((results) => {
+        console.log('Promise resolved, results:', results);
+        return results;
+      })
+      .catch((error) => {
+        console.error('Promise rejected:', error);
+        // Handle the error
+      });
+  } else if (isFile(fileNamePath)) {
+    return initialization(fileNamePath)
+      .then((initializationResult) => {
+        console.log(initializationResult);
+        return initializationResult;
+      })
+      .catch((error) => {
+        console.log('Error occurred:', error);
+      });
+  }
+};
+
 
 /* --------------------Panteon de las funciones no utilizadas------------------- */
 // const printDataFromFile = (links, absolutePath) => {
@@ -181,5 +251,9 @@ module.exports = {
   getLinksFromFile,
   addPathToLinks,
   linksResponse,
-  readDir
+  readDir,
+  isFile,
+  isDirectory,
+  initialization,
+  extractContentFromDirectoryOrFile
 }
