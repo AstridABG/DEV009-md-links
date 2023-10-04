@@ -83,3 +83,29 @@ describe('validateFileType', () => {
   });
 });
 
+//test para 
+
+describe('initialization', () => {
+  const relativePath = '../DEV009-md-links/docs/testFiles/textoprueba.md';
+ const transformedPath = 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\testFiles\\textoprueba.md'
+ const absolutePath2 = 'C:/Users/LNAnd/Documents/Ejercicio-MDLinks/DEV009-md-links/docs/testFiles/textoprueba.md';
+ test('La ruta relativa es transformada correctamente', () => {
+  return data.initialization(relativePath).then((result) => {
+    expect(result).toBe(transformedPath);
+  });
+});
+  
+  test('La ruta no existe', () => {
+    return data.initialization('/ruta/inexistente').catch((error) => {
+      expect(error).toMatch('La ruta no existe');
+    });
+  });
+  
+  test('La extensión del archivo es incorrecta', () => {
+    return data.initialization('/ruta/archivo.pdf').catch((error) => {
+      expect(error).toMatch('La extensión del archivo es incorrecta');
+    });
+  });
+});
+
+

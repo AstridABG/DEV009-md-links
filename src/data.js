@@ -117,7 +117,6 @@ const readDir = (pathName) => {
 };
 
 
-
 const initialization = (fileNamePath) => {
   return new Promise((resolve, reject) => {
     let absolutePath = [];
@@ -132,14 +131,19 @@ const initialization = (fileNamePath) => {
       console.log('La ruta existe y es.. ' + absolutePath);
       if (validateFileType(absolutePath)) {
         console.log('la extension del archivo es correcta');
+        resolve(absolutePath);
       } else {
         console.log('La extension del archivo es incorrecta');
+        reject('La extension del archivo es incorrecta');
       }
     } else {
       console.log('La ruta no existe ');
+      reject('La ruta no existe ');
     }
-    resolve(absolutePath);
-  });
+  })
+  .catch((error) => {
+    console.log(`Error: ${error}`);
+  })
 };
 
 const extractContentFromDirectoryOrFile = (fileNamePath) => {
