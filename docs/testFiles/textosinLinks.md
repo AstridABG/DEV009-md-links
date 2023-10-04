@@ -1,14 +1,10 @@
-### **¿CommonJS Modules o ES Modules, cual debería usar?**
+### **Inicia con un diagrama de flujo y/o pseudocódigo**
 
-Desde el principio, es importante que tomes una decisión respecto a qué tipo de
-módulos utilizarás: ES Modules (import/export) o CommonJS Modules
-(require/module.exports). Ambos cumplen el mismo propósito de modularizar y
-compartir código. Hasta ahora, Node.js ha empleado mayormente los CommonJS
-Modules (require) y funcionan sin necesidad de configuraciones adicionales.
-Sin embargo, en las versiones más recientes de Node.js, también puedes optar
-por utilizar ES Modules, aunque esto requerirá algunos pasos de configuración
-adicionales. Si decides utilizar ES Modules, asegúrate de investigar cómo
-configurar tu proyecto según la versión de Node que estés utilizando. Ten en
-cuenta esta decisión desde el inicio de tu proyecto, ya que afectará la forma
-en que importas y exportas módulos en tu código.
+Este proyecto difiere de los anteriores en los que has trabajado, ya que no
+implica una interfaz web. Todo el desarrollo se llevará a cabo en tu editor
+y en la consola/terminal.
 
+El proyecto se basa en un proceso lógico compuesto por diferentes pasos. Para
+comprender mejor lo que debes hacer y planificar tus tareas y objetivos, se
+recomienda desglosar el proceso en pasos y visualizarlo mediante un diagrama
+de flujo o escribiendo pseudocódigo

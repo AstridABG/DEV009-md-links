@@ -90,20 +90,37 @@ const isDirectory = (pathName) => {
   return stats.isDirectory();
 };
 
-const readDir = (pathName) => {
-const files = fs.readdirSync(pathName);
-const mdFiles = [];
-files.forEach(file => {
-  if (path.extname(file) === ".md") {
-    mdFiles.push(file);
-  }
-});
-return mdFiles;
+// const readDir = (pathName) => {
+// const files = fs.readdirSync(pathName);
+// const mdFiles = [];
+// files.forEach(file => {
+//   if (path.extname(file) === ".md") {
+//     mdFiles.push(file);
+//   }
+// });
+// return mdFiles;
+// };
+const filterMdFiles = (files) => {
+  const mdFiles = [];
+  files.forEach(file => {
+    if (path.extname(file) === ".md") {
+      mdFiles.push(file);
+    }
+  });
+  return mdFiles;
 };
+
+const readDir = (pathName) => {
+  const files = fs.readdirSync(pathName);
+  const mdFiles = filterMdFiles(files);
+  return mdFiles;
+};
+
+
 
 const initialization = (fileNamePath) => {
   return new Promise((resolve, reject) => {
-    let absolutePath = "";
+    let absolutePath = [];
     if (isPathAbsolute(fileNamePath)) {
       absolutePath = fileNamePath;
       console.log('La ruta absoluta es... ' + absolutePath);
@@ -131,18 +148,16 @@ const extractContentFromDirectoryOrFile = (fileNamePath) => {
     const arrayOfFiles = dirContent.map((file) => {
       return initialization(fileNamePath + '/' + file)
         .then((initializationResult) => {
-          console.log('el resultado del forEach es: ' + initializationResult);
+          //console.log('el resultado del forEach es: ' + initializationResult);
           return initializationResult;
         })
         .catch((error) => {
           console.log('Error occurred:', error);
         });
     });
-
-    console.log('el resultado de dirContent es: ' + arrayOfFiles);
     return Promise.all(arrayOfFiles)
       .then((results) => {
-        console.log('Promise resolved, results:', results);
+        //console.log('Promise resolved, results:', results);
         return results;
       })
       .catch((error) => {
@@ -152,8 +167,8 @@ const extractContentFromDirectoryOrFile = (fileNamePath) => {
   } else if (isFile(fileNamePath)) {
     return initialization(fileNamePath)
       .then((initializationResult) => {
-        console.log(initializationResult);
-        return initializationResult;
+        const stringToArray = initializationResult.split( );
+        return stringToArray;
       })
       .catch((error) => {
         console.log('Error occurred:', error);
