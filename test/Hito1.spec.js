@@ -43,10 +43,12 @@ it('Debe entrar una ruta relativa y regresar una ruta absoluta', () => {
 });
 
 describe('readFileAbsolutePath', () => {
-  test('should return the file content', async () => {
+  test('should return the file content',  () => {
     const absolutePath = 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\test\\archivoPrueba1.md';
     const expectedFileContent = 'Para comenzar este proyecto tendrás que hacer un fork y clonar este repositorio.';
-    expect(await data.readFileAbsolutePath(absolutePath)).toBe(expectedFileContent);
+    data.readFileAbsolutePath(absolutePath).then(content => {
+      expect(content).toEqual(expectedFileContent)
+    })
   });
 });
 
