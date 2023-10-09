@@ -12,3 +12,5 @@
 
 * Siguiendo otro camino completamente diferente, podríamos usar expresiones
   regulares (RegExp).
+  
+   **[milestones](https://docs.github.com/es/issues/using-labels-and-milestones-to-track-work/about-milestones)**

@@ -23,18 +23,22 @@ const mdlinks = (fileNamePath, options) => {
 
               links.push(...linksWithPath);
             });
-
             if (links.length > 0) {
-              if (options.validate) {
-                console.log('si se introdujo validate');
+              if (options.validate && options.stats) {
+                data.linksResponse(links)
+                .then((linksSolved) => {
+                  const brokenLinks = data.linkValidateStats(linksSolved);
+                  let uniqueLinks = data.linksStats(links);
+                uniqueLinks.Broken = brokenLinks;
+                resolve(uniqueLinks);
+                })
+              } else if (options.validate){
                 let linksStatus = data.linksResponse(links);
                 resolve(linksStatus);
-              } else if (options.validate && options.stats){
-                console.log('pusiste las dos opciones en cualquier orden para el analisis de links');
               } else if (options.stats) {
-                console.log('pusiste la opcion stats para el analisis de los links');
+                const uniqueLinks = data.linksStats(links);
+                resolve(uniqueLinks);
               } else {
-                console.log('No elegiste ninguna opcion solo obtendras los links en el directorio');
                 resolve(links);
               }
             } else {

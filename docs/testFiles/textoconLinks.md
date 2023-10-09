@@ -9,3 +9,6 @@
 * La **librería** y el **script ejecutable** (herramienta de línea de comando -
   CLI) deben estar implementados en JavaScript para ser ejecutados con
   Node.js. **Está permitido usar librerías externas**.
+
+* [Cheerio](https://cheerio.js./) entre otras.
+[👈Todos los hitos](../README.md#6-hitos)
