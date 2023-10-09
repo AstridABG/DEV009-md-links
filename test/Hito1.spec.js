@@ -1,6 +1,5 @@
 const data = require('../src/data');
 const fs = require('fs');
-//const fsProm = require('fs').promises;
 
 describe('fileExist', () => {
   beforeAll(() => {
@@ -44,10 +43,12 @@ it('Debe entrar una ruta relativa y regresar una ruta absoluta', () => {
 });
 
 describe('readFileAbsolutePath', () => {
-  test('should return the file content', async () => {
+  test('should return the file content',  () => {
     const absolutePath = 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\test\\archivoPrueba1.md';
     const expectedFileContent = 'Para comenzar este proyecto tendrás que hacer un fork y clonar este repositorio.';
-    expect(await data.readFileAbsolutePath(absolutePath)).toBe(expectedFileContent);
+    data.readFileAbsolutePath(absolutePath).then(content => {
+      expect(content).toEqual(expectedFileContent)
+    })
   });
 });
 
@@ -73,7 +74,7 @@ describe('addPathToLinks', () => {
 
 describe('validateFileType', () => {
   it('Debe retornar true si recibe un archivo con una extension valida', () => {
-    const filePath = 'ejemplo.mkd'
+    const filePath = 'ejemplo.md'
     expect(data.validateFileType(filePath)).toBe(true);
   });
 
@@ -82,4 +83,29 @@ describe('validateFileType', () => {
     expect(data.validateFileType(filePath)).toBe(false);
   });
 });
+
+//test para 
+
+describe('initialization', () => {
+  const relativePath = '../DEV009-md-links/docs/testFiles/textoprueba2.md';
+ const transformedPath = 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\testFiles\\textoprueba2.md'
+ test('La ruta relativa es transformada correctamente', () => {
+  return data.initialization(relativePath).then((result) => {
+    expect(result).toBe(transformedPath);
+  });
+});
+  
+  test('La ruta no existe', () => {
+    return data.initialization('/ruta/inexistente').catch((error) => {
+      expect(error).toMatch('La ruta no existe');
+    });
+  });
+  
+  test('La extensión del archivo es incorrecta', () => {
+    return data.initialization('/ruta/archivo.pdf').catch((error) => {
+      expect(error).toMatch('La extensión del archivo es incorrecta');
+    });
+  });
+});
+
 
