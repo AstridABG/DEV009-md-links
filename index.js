@@ -1,4 +1,5 @@
-const {mdlinks} = require('./mdlinks');
+#!/usr/bin/env node
+const {mdlinks} = require('./src/mdlinks');
 const fileNamePath = process.argv[2];
 const option1 = process.argv[3];
 const option2 = process.argv[4];
