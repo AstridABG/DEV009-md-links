@@ -1,6 +1,5 @@
 const data = require('../src/data');
 const fs = require('fs');
-//const fsProm = require('fs').promises;
 
 describe('fileExist', () => {
   beforeAll(() => {
@@ -86,9 +85,8 @@ describe('validateFileType', () => {
 //test para 
 
 describe('initialization', () => {
-  const relativePath = '../DEV009-md-links/docs/testFiles/textoprueba.md';
- const transformedPath = 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\testFiles\\textoprueba.md'
- const absolutePath2 = 'C:/Users/LNAnd/Documents/Ejercicio-MDLinks/DEV009-md-links/docs/testFiles/textoprueba.md';
+  const relativePath = '../DEV009-md-links/docs/testFiles/textoprueba2.md';
+ const transformedPath = 'C:\\Users\\LNAnd\\Documents\\Ejercicio-MDLinks\\DEV009-md-links\\docs\\testFiles\\textoprueba2.md'
  test('La ruta relativa es transformada correctamente', () => {
   return data.initialization(relativePath).then((result) => {
     expect(result).toBe(transformedPath);

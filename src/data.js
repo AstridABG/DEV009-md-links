@@ -30,6 +30,7 @@ const readFileAbsolutePath = async (absolutePath) => {
     return fileContent
   } catch (err) {
     console.log(err.message);
+    return err.message;
   }
 };
 
@@ -85,16 +86,6 @@ const isDirectory = (pathName) => {
   return stats.isDirectory();
 };
 
-// const readDir = (pathName) => {
-// const files = fs.readdirSync(pathName);
-// const mdFiles = [];
-// files.forEach(file => {
-//   if (path.extname(file) === ".md") {
-//     mdFiles.push(file);
-//   }
-// });
-// return mdFiles;
-// };
 const filterMdFiles = (files) => {
   const mdFiles = [];
   files.forEach(file => {
@@ -117,22 +108,16 @@ const initialization = (fileNamePath) => {
     let absolutePath = [];
     if (isPathAbsolute(fileNamePath)) {
       absolutePath = fileNamePath;
-      console.log('La ruta absoluta es... ' + absolutePath);
     } else {
       absolutePath = transformRelativePath(fileNamePath);
-      console.log('la ruta es relativa, transformando en ' + absolutePath);
     }
     if (fileExist(absolutePath)) {
-      console.log('La ruta existe y es.. ' + absolutePath);
       if (validateFileType(absolutePath)) {
-        console.log('la extension del archivo es correcta');
         resolve(absolutePath);
       } else {
-        console.log('La extension del archivo es incorrecta');
         reject('La extension del archivo es incorrecta');
       }
     } else {
-      console.log('La ruta no existe ');
       reject('La ruta no existe ');
     }
   })
@@ -147,7 +132,6 @@ const extractContentFromDirectoryOrFile = (fileNamePath) => {
     const arrayOfFiles = dirContent.map((file) => {
       return initialization(fileNamePath + '/' + file)
         .then((initializationResult) => {
-          //console.log('el resultado del forEach es: ' + initializationResult);
           return initializationResult;
         })
         .catch((error) => {
@@ -156,12 +140,10 @@ const extractContentFromDirectoryOrFile = (fileNamePath) => {
     });
     return Promise.all(arrayOfFiles)
       .then((results) => {
-        //console.log('Promise resolved, results:', results);
         return results;
       })
       .catch((error) => {
         console.error('Promise rejected:', error);
-        // Handle the error
       });
   } else if (isFile(fileNamePath)) {
     return initialization(fileNamePath)

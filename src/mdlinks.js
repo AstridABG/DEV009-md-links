@@ -8,7 +8,6 @@ const mdlinks = (fileNamePath, options) => {
       .then((absolutePath) => {
         absolutePathSolved = absolutePath;
         let promises = [];
-
         for (let i = 0; i < absolutePathSolved.length; i++) {
           promises.push(data.readFileAbsolutePath(absolutePathSolved[i]));
         }
@@ -42,7 +41,7 @@ const mdlinks = (fileNamePath, options) => {
                 resolve(links);
               }
             } else {
-              console.log('No se encontraron links en la ruta', absolutePathSolved);
+              console.log('Linea 45 No se encontraron links en la ruta', absolutePathSolved);
             } 
           })
           .catch((err) => {
