@@ -1,5 +1,8 @@
 {
-  "name": "md-links",
+  "name": "md-links-analyzer",
+  "description": "Node library, for link analysis in markdown files",
+  "main": "index.js",
+  "author": "Astrid Andrea Bolanos Garcia",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.x"

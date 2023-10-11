@@ -157,12 +157,14 @@ const extractContentFromDirectoryOrFile = (fileNamePath) => {
   }
 };
 
+
 const linksStats = (links) => {
   let unique = [];
   const verifyLinks = links.map(link => {
     if (!unique.includes(link.url)){
       unique.push(link.url);
     }
+    return link; // Add this line to return the link
   })
   const statsResult = { Total: verifyLinks.length, Unique: unique.length };
   return statsResult;
