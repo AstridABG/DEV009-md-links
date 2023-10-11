@@ -41,6 +41,12 @@ Esta herramienta consiste en una libreria de Node.js, que permite extraer todos 
 
 ## 3. Instrucciones de instalación:computer:.
 
+Abrir la terminal en la carpeta del proyecto donde desee instalar la librería y escriba el siguiente comando:
+
+```npm install md-links-analyzer@0.1.0```
+
+Una vez instalado ya podrá ser utilizado como se explicará a continuación.
+
 ## 4. Instrucciones de uso:file_folder:.
 
 ### 4.1 Uso de CLI para encontrar enlaces en un archivo.
@@ -178,6 +184,23 @@ En la carpeta test del repositorio se encuentran los test de acuerdo a los hitos
 ![Tabla de tests](img/tests.PNG)
 
 ## 6. Planificación:calendar:.
+
+Para iniciar con la planificación de este proyecto se hizo un diagrama de flujo para definir la ruta de acción.
+
+![Diagrama de flujo](img/diagrama.png)
+
+#### Github projects.
+
+Para la planificación de sprints se utilizó la herramienta de github projects.
+En la primera sección se encontraban los issues que traigo por resolver de proyectos pasados. En la segunda sección tenía los issues de los hitos que estaban en proceso, así como la documentación necesaria para resolverlo. En la tercera, se encontraban las tareas o issues en proceso. En la cuarta sección, se tienen las tareas o issues que ya estan terminados. Y en la última se tiene la retrospectiva de los sprints.
+
+![Github Projects](img/project.PNG)
+
+#### Seguimiento de issues.
+
+Para llevar un mejor control de los avances del proyecto, se crearon issues con accionables de acuerdo a las funcionalidades necesarias para alcanzar los hitos. Conforme se iba avanzando con commits se iba comentando los avances logrados en esa actualización, dejando el enlace del commit y tambien dejando claro que es lo que hacía falta para tener claridad al día siguiente o al retomar el proyecto. [Ejemplo de un issue con accionables y commits](https://github.com/AstridABG/DEV009-md-links/issues/12)
+
+![Seguimiento de issues](img/Seguimiento.PNG)
 
 
 ## 7. Tecnologías utilizadas:ok_woman::computer:.
